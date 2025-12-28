@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <video autoplay muted loop class="video">
+        <source src="../../images/sunny.mp4" type="video/mp4" />
+      </video>
+      <!-- Trang chính -->
+
+      <div class="main-page">
+        <!-- Current Weather -->
+        <div class="current-weather">
+          <div class="location">📍 <span>New York, NY</span></div>
+          <div class="city-time">2:30 PM</div>
+
+          <div class="weather-icon-main">
+            <div class="icon">⛅</div>
+            <div class="weather-desc">Partly Cloudy</div>
+          </div>
+
+          <div class="temp-display" onclick="showForecast()">
+            <div class="temp-main">72°</div>
+            <div class="feels-like">Feels like 70°</div>
+          </div>
+        </div>
+
+        <div class="weather-stats">
+          <div class="stat-item">
+            <span class="stat-icon">💧</span>
+            <div>
+              <div>Humidity 85%</div>
+            </div>
+          </div>
+          <div class="stat-item">
+            <span class="stat-icon">🌡️</span>
+            <div>
+              <div>H (High) 81°</div>
+            </div>
+          </div>
+          <div class="stat-item">
+            <span class="stat-icon">🌫️</span>
+            <div>
+              <div>882 hPa</div>
+            </div>
+          </div>
+          <div class="stat-item">
+            <span class="stat-icon">👁️</span>
+            <div>
+              <div>Visibility 10 mi</div>
+            </div>
+          </div>
+          <div class="stat-item">
+            <span class="stat-icon">☔</span>
+            <div>
+              <div>Precip 0"</div>
+            </div>
+          </div>
+          <div class="stat-item">
+            <span class="stat-icon">🌡️</span>
+            <div>
+              <div>UV Index 6</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Hourly Forecast -->
+      </div>
+      <div class="hourly-forecast">
+        <h2 class="section-title">Hourly Forecast</h2>
+
+        <div class="hourly-items">
+          <div class="forecast-header"></div>
+
+          <div class="hourly-scroll-container">
+            <!-- Nút trượt trái -->
+            <button class="scroll-btn left" id="scrollLeft">‹</button>
+
+            <!-- Danh sách giờ -->
+            <div class="hourly-scroll" id="hourlyScroll">
+              <div class="hour-card">
+                <div class="hour-time">7 pm</div>
+                <div class="hour-icon">🌙</div>
+                <div class="hour-temp">30°</div>
+                <div class="hour-condition">Clear</div>
+                <div class="hour-details">
+                  <div>💧 0%</div>
+                  <div>💨 6 km/h</div>
+                </div>
+              </div>
+
+              <div class="hour-card">
+                <div class="hour-time">8 pm</div>
+                <div class="hour-icon">🌙</div>
+                <div class="hour-temp">30°</div>
+                <div class="hour-condition">Clear</div>
+                <div class="hour-details">
+                  <div>💧 0%</div>
+                  <div>💨 6 km/h</div>
+                </div>
+              </div>
+
+              <div class="hour-card">
+                <div class="hour-time">9 pm</div>
+                <div class="hour-icon">🌙</div>
+                <div class="hour-temp">29°</div>
+                <div class="hour-condition">Clear</div>
+                <div class="hour-details">
+                  <div>💧 0%</div>
+                  <div>💨 5 km/h</div>
+                </div>
+              </div>
+
+              <div class="hour-card">
+                <div class="hour-time">10 pm</div>
+                <div class="hour-icon">🌙</div>
+                <div class="hour-temp">29°</div>
+                <div class="hour-condition">Clear</div>
+                <div class="hour-details">
+                  <div>💧 0%</div>
+                  <div>💨 4 km/h</div>
+                </div>
+              </div>
+
+              <div class="hour-card">
+                <div class="hour-time">11 pm</div>
+                <div class="hour-icon">🌙</div>
+                <div class="hour-temp">29°</div>
+                <div class="hour-condition">Mostly Clear</div>
+                <div class="hour-details">
+                  <div>💧 0%</div>
+                  <div>💨 3 km/h</div>
+                </div>
+              </div>
+
+              <div class="hour-card">
+                <div class="hour-time">12 am</div>
+                <div class="hour-icon">🌙</div>
+                <div class="hour-temp">28°</div>
+                <div class="hour-condition">Mostly Clear</div>
+                <div class="hour-details">
+                  <div>💧 0%</div>
+                  <div>💨 2 km/h</div>
+                </div>
+              </div>
+
+              <div class="hour-card">
+                <div class="hour-time">1 am</div>
+                <div class="hour-icon">⛅</div>
+                <div class="hour-temp">28°</div>
+                <div class="hour-condition">Partly Cloudy</div>
+                <div class="hour-details">
+                  <div>💧 0%</div>
+                  <div>💨 1 km/h</div>
+                </div>
+              </div>
+
+              <div class="hour-card">
+                <div class="hour-time">2 am</div>
+                <div class="hour-icon">⛅</div>
+                <div class="hour-temp">28°</div>
+                <div class="hour-condition">Partly Cloudy</div>
+                <div class="hour-details">
+                  <div>💧 10%</div>
+                  <div>💨 0 km/h</div>
+                </div>
+              </div>
+
+              <div class="hour-card">
+                <div class="hour-time">3 am</div>
+                <div class="hour-icon">🌙</div>
+                <div class="hour-temp">28°</div>
+                <div class="hour-condition">Mostly Clear</div>
+                <div class="hour-details">
+                  <div>💧 10%</div>
+                  <div>💨 0 km/h</div>
+                </div>
+              </div>
+
+              <div class="hour-card">
+                <div class="hour-time">4 am</div>
+                <div class="hour-icon">🌙</div>
+                <div class="hour-temp">27°</div>
+                <div class="hour-condition">Clear</div>
+                <div class="hour-details">
+                  <div>💧 5%</div>
+                  <div>💨 1 km/h</div>
+                </div>
+              </div>
+
+              <div class="hour-card">
+                <div class="hour-time">5 am</div>
+                <div class="hour-icon">🌙</div>
+                <div class="hour-temp">27°</div>
+                <div class="hour-condition">Clear</div>
+                <div class="hour-details">
+                  <div>💧 5%</div>
+                  <div>💨 2 km/h</div>
+                </div>
+              </div>
+
+              <div class="hour-card">
+                <div class="hour-time">6 am</div>
+                <div class="hour-icon">🌅</div>
+                <div class="hour-temp">27°</div>
+                <div class="hour-condition">Clear</div>
+                <div class="hour-details">
+                  <div>💧 0%</div>
+                  <div>💨 3 km/h</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Nút trượt phải -->
+            <button class="scroll-btn right" id="scrollRight">›</button>
+          </div>
+
+          <!-- Chỉ báo scroll -->
+          <div class="scroll-indicator" id="scrollIndicator">
+            <div class="indicator-dot active"></div>
+            <div class="indicator-dot"></div>
+            <div class="indicator-dot"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 7-Day Preview -->
+    <div class="day-forecast">
+      <h2 class="section-title">7-Day Forecast</h2>
+      <div class="forecast-list">
+        <div class="forecast-item" onclick="showForecast()">
+          <div>
+            <div class="day-name">Today</div>
+            <div class="day-date">Jun 12</div>
+          </div>
+          <div class="day-icon">⛅</div>
+          <div class="day-condition">Partly Cloudy</div>
+          <div class="day-temps">
+            <span class="temp-high">74°</span>
+            <span class="temp-low">68°</span>
+          </div>
+        </div>
+        <div class="forecast-item" onclick="showForecast()">
+          <div>
+            <div class="day-name">Thu</div>
+            <div class="day-date">Jun 13</div>
+          </div>
+          <div class="day-icon">☀️</div>
+          <div class="day-condition">Sunny</div>
+          <div class="day-temps">
+            <span class="temp-high">77°</span>
+            <span class="temp-low">69°</span>
+          </div>
+        </div>
+        <div class="forecast-item" onclick="showForecast()">
+          <div>
+            <div class="day-name">Fri</div>
+            <div class="day-date">Jun 14</div>
+          </div>
+          <div class="day-icon">☀️</div>
+          <div class="day-condition">Sunny</div>
+          <div class="day-temps">
+            <span class="temp-high">80°</span>
+            <span class="temp-low">67°</span>
+          </div>
+        </div>
+      </div>
+      <!-- Trang chi tiết 7 ngày -->
+      <div class="forecast-page" id="forecastPage">
+        <div class="forecast-header">
+          <button class="back-btn" onclick="showMain()">← Back</button>
+          <h2 class="section-title">7-Day Forecast</h2>
+          <div></div>
+        </div>
+
+        <div class="forecast-list">
+          <div class="forecast-item">
+            <div>
+              <div class="day-name">Today</div>
+              <div class="day-date">Jun 12</div>
+            </div>
+            <div class="day-icon">⛅</div>
+            <div class="day-condition">Partly Cloudy</div>
+            <div class="day-temps">
+              <span>🌡️ 65%</span>
+              <span class="temp-high">74°</span>
+              <span class="temp-low">/ 68°</span>
+            </div>
+          </div>
+
+          <div class="forecast-item">
+            <div>
+              <div class="day-name">Thu</div>
+              <div class="day-date">Jun 13</div>
+            </div>
+            <div class="day-icon">☀️</div>
+            <div class="day-condition">Sunny</div>
+            <div class="day-temps">
+              <span>🌡️ 0%</span>
+              <span class="temp-high">77°</span>
+              <span class="temp-low">/ 69°</span>
+            </div>
+          </div>
+
+          <div class="forecast-item">
+            <div>
+              <div class="day-name">Fri</div>
+              <div class="day-date">Jun 14</div>
+            </div>
+            <div class="day-icon">☀️</div>
+            <div class="day-condition">Sunny</div>
+            <div class="day-temps">
+              <span>🌡️ 0%</span>
+              <span class="temp-high">80°</span>
+              <span class="temp-low">/ 67°</span>
+            </div>
+          </div>
+
+          <div class="forecast-item">
+            <div>
+              <div class="day-name">Sat</div>
+              <div class="day-date">Jun 15</div>
+            </div>
+            <div class="day-icon">⛅</div>
+            <div class="day-condition">Partly Cloudy</div>
+            <div class="day-temps">
+              <span>🌡️ 50%</span>
+              <span class="temp-high">82°</span>
+              <span class="temp-low">/ 68°</span>
+            </div>
+          </div>
+
+          <div class="forecast-item">
+            <div>
+              <div class="day-name">Sun</div>
+              <div class="day-date">Jun 16</div>
+            </div>
+            <div class="day-icon">☁️</div>
+            <div class="day-condition">Cloudy</div>
+            <div class="day-temps">
+              <span>🌡️ 70%</span>
+              <span class="temp-high">78°</span>
+              <span class="temp-low">/ 66°</span>
+            </div>
+          </div>
+
+          <div class="forecast-item">
+            <div>
+              <div class="day-name">Mon</div>
+              <div class="day-date">Jun 17</div>
+            </div>
+            <div class="day-icon">🌧️</div>
+            <div class="day-condition">Light Rain</div>
+            <div class="day-temps">
+              <span>🌡️ 90%</span>
+              <span class="temp-high">76°</span>
+              <span class="temp-low">/ 64°</span>
+            </div>
+          </div>
+
+          <div class="forecast-item">
+            <div>
+              <div class="day-name">Tue</div>
+              <div class="day-date">Jun 18</div>
+            </div>
+            <div class="day-icon">🌧️</div>
+            <div class="day-condition">Light Rain</div>
+            <div class="day-temps">
+              <span>🌡️ 80%</span>
+              <span class="temp-high">75°</span>
+              <span class="temp-low">/ 63°</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
