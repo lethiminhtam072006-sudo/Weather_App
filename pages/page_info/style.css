@@ -65,8 +65,20 @@ body {
 }
 
 .weather-icon-main .icon {
-  font-size: 80px;
+  font-size: 100px;
   margin-bottom: 10px;
+  animation: float 3s ease-in-out infinite;
+}
+@keyframes float {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-12px);
+  }
+  100% {
+    transform: translateY(0);
+  }
 }
 
 .weather-desc {
@@ -85,7 +97,7 @@ body {
 }
 
 .temp-main {
-  font-size: 72px;
+  font-size: 60px;
   font-weight: 700;
   color: #333;
 }
@@ -306,15 +318,17 @@ body {
   background: rgba(255, 255, 255, 0.8);
 }
 /* 7-Day Forecast - Trang chi tiết */
-.forecast-page {
-  display: none;
+.day-forecast {
+  display: grid;
   background: rgba(255, 255, 255, 0.15);
   border-radius: 20px;
-  padding: 30px;
+  padding: 20px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  gap: 15px;
+  margin-top: 20px;
 }
 
-.forecast-page.active {
+/* .forecast-page.active {
   display: block;
 }
 
@@ -334,7 +348,7 @@ body {
   font-size: 14px;
   color: #666;
   transition: all 0.3s;
-}
+} */
 
 .back-btn:hover {
   background: #e9ecef;
@@ -343,14 +357,14 @@ body {
 .forecast-list {
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 7px;
 }
 
 .forecast-item {
   display: grid;
   grid-template-columns: 100px 100px 1fr 150px;
   align-items: center;
-  padding: 20px;
+  padding: 5px;
   background: rgba(255, 255, 255, 0.2);
   border-radius: 15px;
   transition: all 0.3s;
@@ -418,12 +432,39 @@ body {
   }
 
   .forecast-item {
-    grid-template-columns: 1fr;
-    gap: 10px;
-    text-align: center;
+    grid-template-columns: 70px 50px 1fr 80px;
+    gap: 8px;
+    padding: 10px 8px;
+  }
+
+  .day-name {
+    font-size: 14px;
+  }
+
+  .day-date {
+    font-size: 10px;
+  }
+
+  .day-icon {
+    font-size: 30px;
+  }
+
+  .day-condition {
+    font-size: 13px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
   .day-temps {
-    justify-content: center;
+    gap: 8px;
+  }
+
+  .temp-high {
+    font-size: 16px;
+  }
+
+  .temp-low {
+    font-size: 14px;
   }
 }
