@@ -121,7 +121,7 @@ body {
 /* Today's Forecast Chart */
 .forecast-chart {
   margin-top: 1px;
-  height: 210px;
+  height: 280px;
 }
 
 .forecast-chart h2 {
@@ -140,6 +140,7 @@ body {
 .chart-canvas {
   width: 100%;
   height: 100%;
+  margin-top: -40px;
 }
 
 .forecast-items {

@@ -15,9 +15,11 @@
       <div class="search-bar">
         <input
           type="text"
+          id="searchInput"
           class="search-input"
           placeholder="Search for cities"
         />
+        <button id="searchBtn">Search</button>
       </div>
 
       <div class="grid">
@@ -26,11 +28,13 @@
           <!-- Current Weather -->
           <div class="card current-weather">
             <div class="weather-display">
-              <h1>Madrid</h1>
-              <p class="chance-rain">Chance of rain: 0%</p>
-              <div class="temperature">31°</div>
+              <h1 id="cityName">Madrid</h1>
+              <p class="chance-rain" id="chanceRain">Chance of rain: 0%</p>
+              <div class="temperature" id="currentTemp">31°</div>
             </div>
-            <div class="weather-icon icon-floating">☁️</div>
+
+            <div class="weather-icon icon-floating" id="weatherIcon">☁️</div>
+            <p id="weatherDesc"></p>
           </div>
 
           <!-- Today's Forecast with Chart -->
@@ -55,7 +59,7 @@
                   <span>🌡️</span>
                   <span>Real Feel</span>
                 </div>
-                <div class="air-value">30°</div>
+                <div class="air-value" id="feelsLike">30°</div>
               </div>
 
               <div class="air-item">
@@ -63,7 +67,7 @@
                   <span>💨</span>
                   <span>Wind</span>
                 </div>
-                <div class="air-value">0.2 km/h</div>
+                <div class="air-value" id="windSpeed">0.2 km/h</div>
               </div>
 
               <div class="air-item">
@@ -71,7 +75,7 @@
                   <span>💧</span>
                   <span>Chance of rain</span>
                 </div>
-                <div class="air-value">0%</div>
+                <div class="air-value" id="humidity">0%</div>
               </div>
 
               <div class="air-item">
@@ -79,7 +83,7 @@
                   <span>☀️</span>
                   <span>UV Index</span>
                 </div>
-                <div class="air-value">3</div>
+                <div class="air-value" id="pressure">3</div>
               </div>
             </div>
           </div>
@@ -89,7 +93,7 @@
         <div class="card week-forecast">
           <h2>7-DAY FORECAST</h2>
 
-          <div class="forecast-list">
+          <div class="forecast-list" id="forecastList">
             <div class="forecast-day">
               <div class="day-name">Today</div>
               <div class="day-weather">
@@ -177,6 +181,8 @@
         </div>
       </div>
     </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+
     <script src="./style.js"></script>
   </body>
 </html>

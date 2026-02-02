@@ -9,23 +9,21 @@
   <body>
     <div class="nav-bar">
       <div class="nav-cities">
-        <div class="nav-city">Hà Nội</div>
-        <div class="nav-city">Đà Nẵng</div>
-        <div class="nav-city">Cần Thơ</div>
-        <div class="nav-city">Quy Nhơn</div>
-        <div class="nav-city active">Hồ Chí Minh</div>
+        <div class="nav-city" data-city="Ha Noi">Hà Nội</div>
+        <div class="nav-city" data-city="Da Nang">Đà Nẵng</div>
+        <div class="nav-city" data-city="Can Tho">Cần Thơ</div>
+        <div class="nav-city" data-city="Quy Nhon">Quy Nhơn</div>
+        <div class="nav-city active" data-city="Ho Chi Minh City">
+          Hồ Chí Minh
+        </div>
       </div>
       <div class="nav-controls">
-        <div class="toggle-container" onclick="toggleUnit()">
+        <div class="toggle-container" id="toggleUnit">
           <div class="toggle-slider" id="slider"></div>
           <div class="toggle-option active" id="celsius">°C</div>
           <div class="toggle-option" id="fahrenheit">°F</div>
         </div>
-        <input
-          type="text"
-          class="search-input-nav"
-          placeholder="🔍 Conditions..."
-        />
+        <input type="text" class="search" placeholder="🔍 Conditions..." />
       </div>
     </div>
 
@@ -38,50 +36,52 @@
           Đang tải... <span class="spinner"></span>
         </div>
 
-        <div id="weatherData">
+        <div id="weatherData" class="hide">
           <div class="city-name">
-            Ho Chi Minh City <span class="country-code"></span>
+            <span id="cityName">Ho Chi Minh City </span>
+            <span class="country-code" id="countryCode"></span>
             <div class="datetime-container">
-              <div class="date-subtitle">11/12/2025</div>
+              <div class="date-subtitle" id="currentDate">11/12/2025</div>
               <div class="time-display">
                 <span id="currentTime">10:03:18 CH</span>
               </div>
             </div>
           </div>
           <div class="weather-info">
-            <div class="icon icon-floating">☀️</div>
+            <div class="icon icon-floating" id="weatherIcon">☀️</div>
+            <div class="weather-description" id="weatherDesc">Sunny</div>
             <div class="temperature">
-              <div class="temp-celsius">31°C</div>
-              <div class="temp-fahrenheit">87°F</div>
+              <div class="temp-celsius" id="tempCelsius">31°C</div>
+              <div class="temp-fahrenheit" id="tempFahrenheit">87°F</div>
             </div>
 
             <div class="weather-details">
               <div class="detail-card">
-                <div class="detail-label">Humidity</div>
+                <div class="detail-label">Độ ẩm</div>
                 <div class="detail-value">
                   <span class="detail-icon">💧</span>
-                  <span>65%</span>
+                  <span id="humidity">65%</span>
                 </div>
               </div>
               <div class="detail-card">
-                <div class="detail-label">Wind Speed</div>
+                <div class="detail-label">Tốc độ gió</div>
                 <div class="detail-value">
                   <span class="detail-icon">💨</span>
-                  <span>2.57 km/h</span>
+                  <span id="windSpeed">2.57 km/h</span>
                 </div>
               </div>
               <div class="detail-card">
-                <div class="detail-label">Pressure</div>
+                <div class="detail-label">áp suất</div>
                 <div class="detail-value">
                   <span class="detail-icon">🌫️</span>
-                  <span>1012 hPa</span>
+                  <span id="pressure">1012 hPa</span>
                 </div>
               </div>
               <div class="detail-card">
-                <div class="detail-label">Visibility</div>
+                <div class="detail-label">Tầm nhìn</div>
                 <div class="detail-value">
                   <span class="detail-icon">👁️</span>
-                  <span>10 km</span>
+                  <span id="visibility">10 km</span>
                 </div>
               </div>
             </div>
