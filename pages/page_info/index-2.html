@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -11,15 +11,10 @@
       <video autoplay muted loop class="video">
         <source src="../../images/stormmp4.mp4" type="video/mp4" />
       </video>
+
       <!-- Search Bar -->
-      <div class="search-bar">
-        <input
-          type="text"
-          id="searchInput"
-          class="search-input"
-          placeholder="Search for cities"
-        />
-        <button id="searchBtn">Search</button>
+      <div class="nav-controls">
+        <input type="text" class="search" placeholder="🔍 Tìm kiếm..." />
       </div>
 
       <div class="grid">
@@ -27,20 +22,25 @@
         <div class="day-forecast">
           <!-- Current Weather -->
           <div class="card current-weather">
-            <div class="weather-display">
-              <h1 id="cityName">Madrid</h1>
-              <p class="chance-rain" id="chanceRain">Chance of rain: 0%</p>
-              <div class="temperature" id="currentTemp">31°</div>
+            <div class="weather-container">
+              <div class="city-name">
+                <span id="cityName">Madrid</span>
+              </div>
+              <div class="weather-info">
+                <div class="icon icon-floating" id="weatherIcon">☁️</div>
+                <div class="temp-desc">
+                  <div class="weather-description" id="weatherDesc"></div>
+                  <div class="temperature">
+                    <div class="temp-celsius" id="currentTemp">31°</div>
+                  </div>
+                </div>
+              </div>
             </div>
-
-            <div class="weather-icon icon-floating" id="weatherIcon">☁️</div>
-            <p id="weatherDesc"></p>
           </div>
 
           <!-- Today's Forecast with Chart -->
           <div class="card forecast-chart">
-            <h2>TODAY'S FORECAST</h2>
-
+            <h2>HÔM NAY</h2>
             <div class="chart-container">
               <canvas id="tempChart" class="chart-canvas"></canvas>
             </div>
@@ -49,41 +49,33 @@
           <!-- Air Conditions -->
           <div class="card air-conditions">
             <div class="air-header">
-              <h2>AIR CONDITIONS</h2>
-              <button class="see-more-btn">See more</button>
+              <h2>ĐIỀU KIỆN KHÍ HẬU</h2>
             </div>
 
-            <div class="air-grid">
-              <div class="air-item">
-                <div class="air-label">
-                  <span>🌡️</span>
-                  <span>Real Feel</span>
+            <div class="weather-details">
+              <div class="detail-card">
+                <div class="detail-label">🌡️ Real Feel</div>
+                <div class="detail-value">
+                  <span id="feelsLike">30°</span>
                 </div>
-                <div class="air-value" id="feelsLike">30°</div>
               </div>
-
-              <div class="air-item">
-                <div class="air-label">
-                  <span>💨</span>
-                  <span>Wind</span>
+              <div class="detail-card">
+                <div class="detail-label">💨 Wind</div>
+                <div class="detail-value">
+                  <span id="windSpeed">0.2 km/h</span>
                 </div>
-                <div class="air-value" id="windSpeed">0.2 km/h</div>
               </div>
-
-              <div class="air-item">
-                <div class="air-label">
-                  <span>💧</span>
-                  <span>Chance of rain</span>
+              <div class="detail-card">
+                <div class="detail-label">💧 Chance of rain</div>
+                <div class="detail-value">
+                  <span id="humidity">0%</span>
                 </div>
-                <div class="air-value" id="humidity">0%</div>
               </div>
-
-              <div class="air-item">
-                <div class="air-label">
-                  <span>☀️</span>
-                  <span>UV Index</span>
+              <div class="detail-card">
+                <div class="detail-label">☀️ UV Index</div>
+                <div class="detail-value">
+                  <span id="pressure">3</span>
                 </div>
-                <div class="air-value" id="pressure">3</div>
               </div>
             </div>
           </div>
@@ -91,7 +83,7 @@
 
         <!-- Right Column - 7-Day Forecast -->
         <div class="card week-forecast">
-          <h2>7-DAY FORECAST</h2>
+          <h2>DỰ BÁO 7 NGÀY</h2>
 
           <div class="forecast-list" id="forecastList">
             <div class="forecast-day">
@@ -181,8 +173,8 @@
         </div>
       </div>
     </div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
     <script src="./style.js"></script>
   </body>
 </html>

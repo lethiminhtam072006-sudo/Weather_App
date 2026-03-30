@@ -139,7 +139,7 @@ body {
 }
 .nav-icon {
   color: white;
-  font-size: 18px;
+  font-size: 28px;
   cursor: pointer;
   opacity: 0.8;
   transition: all 0.3s;
@@ -161,7 +161,7 @@ body {
 }
 
 .search-input-nav::placeholder {
-  color: rgba(255, 255, 255, 0.7);
+  color: rgba(255, 255, 255, 0.8);
 }
 
 .search-input-nav:focus {
@@ -212,7 +212,11 @@ body {
   font-size: 45px;
   font-weight: 700;
   margin-bottom: 20px;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+  text-shadow:
+    0 0 10px white,
+    0 0 200px white,
+    0 0 20px white,
+    0 0 30px white;
 }
 
 .country-code {
@@ -296,7 +300,7 @@ body {
 }
 
 .detail-label {
-  font-size: 14px;
+  font-size: 20px;
   opacity: 0.8;
   margin-bottom: 10px;
 }

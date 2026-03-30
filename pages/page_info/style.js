@@ -1,136 +1,245 @@
-// ⚠️ THAY ĐỔI API KEY TẠI ĐÂY
-const API_KEY = "c4cbb91daa6ed9185682c8650441c74b"; // Thay bằng API key của bạn từ openweathermap.org
-const BASE_URL = "https://api.openweathermap.org/data/2.5";
+const API_KEY = "76be224612589a9786da08fbe1feade7";
 
-let tempChart = null;
+const search = document.querySelector(".search");
+const cityNameEl = document.getElementById("cityName");
+const weatherIconEl = document.getElementById("weatherIcon");
+const weatherDescEl = document.getElementById("weatherDesc");
+const currentTempEl = document.getElementById("currentTemp");
+const feelsLikeEl = document.getElementById("feelsLike");
+const windSpeedEl = document.getElementById("windSpeed");
+const humidityEl = document.getElementById("humidity");
+const pressureEl = document.getElementById("pressure");
+const forecastListEl = document.getElementById("forecastList");
 
-// Weather icon mapping
 const weatherIcons = {
-  Clear: "☀️",
-  Clouds: "☁️",
-  Rain: "🌧️",
-  Drizzle: "🌦️",
-  Thunderstorm: "⚡",
-  Snow: "❄️",
-  Mist: "🌫️",
-  Fog: "🌫️",
-  Haze: "🌫️",
+  "01d": "☀️",
+  "01n": "🌙",
+  "02d": "⛅",
+  "02n": "☁️",
+  "03d": "☁️",
+  "03n": "☁️",
+  "04d": "☁️",
+  "04n": "☁️",
+  "09d": "🌧️",
+  "09n": "🌧️",
+  "10d": "🌦️",
+  "10n": "🌧️",
+  "11d": "⛈️",
+  "11n": "⛈️",
+  "13d": "❄️",
+  "13n": "❄️",
+  "50d": "🌫️",
+  "50n": "🌫️",
 };
 
-// Get weather icon
-function getWeatherIcon(main) {
-  return weatherIcons[main] || "🌤️";
-}
+const weatherVideos = {
+  "01d": "../../images/sunny-day.mp4",
+  "01n": "../../images/clear-night.mp4",
+  "02d": "../../images/sunny-day.mp4",
+  "02n": "../../images/cloudy-night.mp4",
+  "03d": "../../images/cloudy-day.mp4",
+  "03n": "../../images/cloudy-night.mp4",
+  "04d": "../../images/cloudy-day.mp4",
+  "04n": "../../images/cloudy-night.mp4",
+  "09d": "../../images/rainy-day.mp4",
+  "09n": "../../images/rainy-night.mp4",
+  "10d": "../../images/rainy-day.mp4",
+  "10n": "../../images/rainy-night.mp4",
+  "11d": "../../images/storm.mp4",
+  "11n": "../../images/storm.mp4",
+  "13d": "../../images/snow.mp4",
+  "13n": "../../images/snow.mp4",
+  "50d": "../../images/fog-day.mp4",
+  "50n": "../../images/fog-night.mp4",
+};
 
-// Format day name
-function getDayName(date) {
-  const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-  return days[date.getDay()];
-}
-
-// Show/Hide elements
-// function showElement(id) {
-//   document.getElementById(id).style.display = "block";
-// }
-
-// function hideElement(id) {
-//   document.getElementById(id).style.display = "none";
-// }
-
-// Show error message
-// function showError(message) {
-//   const errorMsg = document.getElementById("errorMsg");
-//   errorMsg.textContent = message;
-//   showElement("errorMsg");
-//   setTimeout(() => hideElement("errorMsg"), 5000);
-// }
-
-// Fetch current weather
-async function fetchCurrentWeather(city) {
-  const response = await fetch(
-    `${BASE_URL}/weather?q=${city}&units=metric&appid=${API_KEY}`
-  );
-
-  if (!response.ok) {
-    throw new Error("City not found");
+// ============================================
+// UPDATE BACKGROUND VIDEO
+// ============================================
+function updateBackgroundVideo(iconCode) {
+  const videoElement = document.querySelector(".video");
+  const videoSource = videoElement.querySelector("source");
+  const newSrc = weatherVideos[iconCode] || "../../images/night.mp4";
+  if (videoSource.src !== newSrc) {
+    videoSource.src = newSrc;
+    videoElement.load();
+    videoElement.play();
   }
-
-  return await response.json();
 }
 
-// Fetch forecast
-async function fetchForecast(city) {
-  const response = await fetch(
-    `${BASE_URL}/forecast?q=${city}&units=metric&appid=${API_KEY}`
-  );
+// ============================================
+// CITY COORDINATES
+// ============================================
+const cityCoordinates = {
+  "Ha Noi": { lat: 21.0285, lon: 105.8542, name: "Hà Nội" },
+  Hanoi: { lat: 21.0285, lon: 105.8542, name: "Hà Nội" },
+  "Ho Chi Minh City": { lat: 10.8231, lon: 106.6297, name: "Hồ Chí Minh" },
+  "Ho Chi Minh": { lat: 10.8231, lon: 106.6297, name: "Hồ Chí Minh" },
+  Saigon: { lat: 10.8231, lon: 106.6297, name: "Sài Gòn" },
+  "Da Nang": { lat: 16.0544, lon: 108.2022, name: "Đà Nẵng" },
+  "Hai Phong": { lat: 20.8449, lon: 106.6881, name: "Hải Phòng" },
+  "Can Tho": { lat: 10.0452, lon: 105.7469, name: "Cần Thơ" },
+  "Quy Nhon": { lat: 13.783, lon: 109.2196, name: "Quy Nhơn" },
+  "Nha Trang": { lat: 12.2388, lon: 109.1967, name: "Nha Trang" },
+  "Da Lat": { lat: 11.9404, lon: 108.4583, name: "Đà Lạt" },
+  "Vung Tau": { lat: 10.346, lon: 107.0843, name: "Vũng Tàu" },
+  Hue: { lat: 16.4637, lon: 107.5909, name: "Huế" },
+  "Ha Long": { lat: 20.9511, lon: 107.0763, name: "Hạ Long" },
+  "Bien Hoa": { lat: 10.951, lon: 106.823, name: "Biên Hòa" },
+  "Ca Mau": { lat: 9.1769, lon: 105.1524, name: "Cà Mau" },
+};
 
-  if (!response.ok) {
-    throw new Error("Failed to fetch forecast");
+// ============================================
+// GEOCODING FALLBACK
+// ============================================
+async function getCityCoordinates(city) {
+  try {
+    let url = `https://api.openweathermap.org/geo/1.0/direct?q=${encodeURIComponent(city + ", Vietnam")}&limit=5&appid=${API_KEY}`;
+    let res = await fetch(url);
+    let data = await res.json();
+
+    if (data.length === 0) {
+      url = `https://api.openweathermap.org/geo/1.0/direct?q=${encodeURIComponent(city)}&limit=5&appid=${API_KEY}`;
+      res = await fetch(url);
+      data = await res.json();
+    }
+
+    if (data.length > 0) {
+      const vn = data.find((d) => d.country === "VN") || data[0];
+      return { lat: vn.lat, lon: vn.lon, name: vn.name };
+    }
+    return null;
+  } catch (err) {
+    console.error("Geocoding error:", err);
+    return null;
   }
-
-  return await response.json();
 }
 
-// Update current weather display
-function updateCurrentWeather(data) {
-  document.getElementById(
-    "cityName"
-  ).textContent = `${data.name}, ${data.sys.country}`;
-  document.getElementById(
-    "chanceRain"
-  ).textContent = `Cloudiness: ${data.clouds.all}%`;
-  document.getElementById("currentTemp").textContent = `${Math.round(
-    data.main.temp
-  )}°`;
-  document.getElementById("weatherIcon").textContent = getWeatherIcon(
-    data.weather[0].main
-  );
-  document.getElementById("weatherDesc").textContent =
-    data.weather[0].description;
+// ============================================
+// FETCH CURRENT WEATHER
+// ============================================
+async function fetchWeatherByCoords(lat, lon, displayName = null) {
+  try {
+    const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&lang=vi&appid=${API_KEY}`;
+    const res = await fetch(url);
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const data = await res.json();
 
-  // Air conditions
-  document.getElementById("feelsLike").textContent = `${Math.round(
-    data.main.feels_like
-  )}°`;
-  document.getElementById("windSpeed").textContent = `${data.wind.speed} m/s`;
-  document.getElementById("humidity").textContent = `${data.main.humidity}%`;
-  document.getElementById("pressure").textContent = `${data.main.pressure} hPa`;
-}
+    const iconCode = data.weather[0].icon;
 
-// Update chart
-function updateChart(forecastData) {
-  const next24Hours = forecastData.list.slice(0, 8);
+    cityNameEl.textContent = displayName || data.name;
+    weatherIconEl.textContent = weatherIcons[iconCode] || "🌤️";
+    weatherDescEl.textContent = data.weather[0].description;
+    currentTempEl.textContent = Math.round(data.main.temp) + "°";
+    feelsLikeEl.textContent = Math.round(data.main.feels_like) + "°";
+    windSpeedEl.textContent = (data.wind.speed * 3.6).toFixed(1) + " km/h";
+    humidityEl.textContent = data.main.humidity + "%";
+    pressureEl.textContent = data.main.pressure + " hPa";
 
-  const labels = next24Hours.map((item) => {
-    const date = new Date(item.dt * 1000);
-    return date.toLocaleTimeString("en-US", { hour: "numeric", hour12: true });
-  });
-
-  const temps = next24Hours.map((item) => Math.round(item.main.temp));
-
-  const ctx = document.getElementById("tempChart").getContext("2d");
-
-  if (tempChart) {
-    tempChart.destroy();
+    updateBackgroundVideo(iconCode);
+    await fetchForecast(lat, lon);
+  } catch (err) {
+    console.error("fetchWeatherByCoords error:", err);
+    alert("Không thể lấy dữ liệu thời tiết. Vui lòng thử lại!");
   }
+}
 
-  tempChart = new Chart(ctx, {
+// ============================================
+// FETCH 7-DAY FORECAST
+// ============================================
+async function fetchForecast(lat, lon) {
+  try {
+    const url = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&units=metric&lang=vi&appid=${API_KEY}`;
+    const res = await fetch(url);
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const data = await res.json();
+
+    // Nhóm theo ngày, lấy max/min temp
+    const days = {};
+    data.list.forEach((item) => {
+      const date = new Date(item.dt * 1000);
+      const dayKey = date.toLocaleDateString("en-US", { weekday: "short" });
+      const fullKey = date.toDateString();
+
+      if (!days[fullKey]) {
+        days[fullKey] = {
+          label: dayKey,
+          high: item.main.temp_max,
+          low: item.main.temp_min,
+          icon: item.weather[0].icon,
+          desc: item.weather[0].description,
+        };
+      } else {
+        days[fullKey].high = Math.max(days[fullKey].high, item.main.temp_max);
+        days[fullKey].low = Math.min(days[fullKey].low, item.main.temp_min);
+      }
+    });
+
+    const dayEntries = Object.values(days).slice(0, 7);
+
+    forecastListEl.innerHTML = dayEntries
+      .map(
+        (d, i) => `
+      <div class="forecast-day">
+        <div class="day-name">${i === 0 ? "Today" : d.label}</div>
+        <div class="day-weather">
+          <div class="day-icon">${weatherIcons[d.icon] || "🌤️"}</div>
+          <div class="day-condition">${d.desc}</div>
+        </div>
+        <div class="day-temp">
+          <span class="temp-high">${Math.round(d.high)}</span>
+          <span class="temp-low">/${Math.round(d.low)}</span>
+        </div>
+      </div>
+    `,
+      )
+      .join("");
+
+    renderChart(dayEntries);
+  } catch (err) {
+    console.error("fetchForecast error:", err);
+  }
+}
+
+// ============================================
+// CHART (TODAY'S FORECAST)
+// ============================================
+let chartInstance = null;
+
+function renderChart(days) {
+  const ctx = document.getElementById("tempChart");
+  if (!ctx) return;
+
+  if (chartInstance) chartInstance.destroy();
+
+  const labels = days.map((d, i) => (i === 0 ? "Today" : d.label));
+  const highs = days.map((d) => Math.round(d.high));
+  const lows = days.map((d) => Math.round(d.low));
+
+  chartInstance = new Chart(ctx, {
     type: "line",
     data: {
-      labels: labels,
+      labels,
       datasets: [
         {
-          label: "Temperature",
-          data: temps,
-          borderColor: "#F59E0B",
-          backgroundColor: "rgba(245, 158, 11, 0.1)",
-          borderWidth: 3,
+          label: "High °C",
+          data: highs,
+          borderColor: "#f97316",
+          backgroundColor: "rgba(249,115,22,0.15)",
           tension: 0.4,
-          pointRadius: 5,
-          pointBackgroundColor: "#F59E0B",
-          pointBorderColor: "#F59E0B",
-          pointHoverRadius: 7,
           fill: true,
+          pointBackgroundColor: "#f97316",
+          pointRadius: 5,
+        },
+        {
+          label: "Low °C",
+          data: lows,
+          borderColor: "#60a5fa",
+          backgroundColor: "rgba(96,165,250,0.1)",
+          tension: 0.4,
+          fill: true,
+          pointBackgroundColor: "#60a5fa",
+          pointRadius: 5,
         },
       ],
     },
@@ -138,148 +247,67 @@ function updateChart(forecastData) {
       responsive: true,
       maintainAspectRatio: false,
       plugins: {
-        legend: { display: false },
-        tooltip: {
-          backgroundColor: "#1e293b",
-          titleColor: "#fff",
-          bodyColor: "#fff",
-          borderColor: "#475569",
-          borderWidth: 1,
-          padding: 12,
-          displayColors: false,
-          callbacks: {
-            label: function (context) {
-              return context.parsed.y + "°C";
-            },
-          },
-        },
+        legend: { labels: { color: "#d1d5db", font: { size: 12 } } },
       },
       scales: {
-        y: {
-          ticks: {
-            color: "#9ca3af",
-            font: { size: 12 },
-            callback: function (value) {
-              return value + "°";
-            },
-          },
-          grid: {
-            color: "#374151",
-            drawBorder: false,
-          },
-        },
         x: {
-          ticks: {
-            color: "#9ca3af",
-            font: { size: 12 },
-          },
-          grid: {
-            color: "#374151",
-            drawBorder: false,
-          },
+          ticks: { color: "#9ca3af" },
+          grid: { color: "rgba(255,255,255,0.05)" },
+        },
+        y: {
+          ticks: { color: "#9ca3af", callback: (v) => v + "°" },
+          grid: { color: "rgba(255,255,255,0.05)" },
         },
       },
     },
   });
 }
 
-// Update 5-day forecast
-function updateForecast(forecastData) {
-  const dailyData = {};
+// ============================================
+// MAIN FETCH ENTRY POINT
+// ============================================
+async function fetchWeather(city) {
+  const normalized = city
+    .trim()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[đĐ]/g, (m) => (m === "đ" ? "d" : "D"));
 
-  forecastData.list.forEach((item) => {
-    const date = new Date(item.dt * 1000);
-    const dateKey = date.toDateString();
-
-    if (!dailyData[dateKey]) {
-      dailyData[dateKey] = {
-        temps: [],
-        weather: item.weather[0].main,
-        date: date,
-      };
+  let found = null;
+  for (const [key, val] of Object.entries(cityCoordinates)) {
+    const normKey = key
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .replace(/[đĐ]/g, (m) => (m === "đ" ? "d" : "D"));
+    if (normKey.toLowerCase() === normalized.toLowerCase()) {
+      found = val;
+      break;
     }
-
-    dailyData[dateKey].temps.push(item.main.temp);
-  });
-
-  const forecastList = document.getElementById("forecastList");
-  forecastList.innerHTML = "";
-
-  Object.values(dailyData)
-    .slice(0, 5)
-    .forEach((day, index) => {
-      const dayName = index === 0 ? "Today" : getDayName(day.date);
-      const high = Math.round(Math.max(...day.temps));
-      const low = Math.round(Math.min(...day.temps));
-      const icon = getWeatherIcon(day.weather);
-
-      const dayHTML = `
-            <div class="forecast-day">
-                <div class="day-name">${dayName}</div>
-                <div class="day-weather">
-                    <div class="day-icon">${icon}</div>
-                    <div class="day-condition">${day.weather}</div>
-                </div>
-                <div class="day-temp">
-                    <span class="temp-high">${high}</span><span class="temp-low">/${low}</span>
-                </div>
-            </div>
-        `;
-
-      forecastList.innerHTML += dayHTML;
-    });
-}
-
-// Load weather data
-async function loadWeather(city) {
-  if (!API_KEY) {
-    showError("Please add your OpenWeatherMap API key in the codey");
-    return;
   }
 
-  try {
-    // showElement("loading");
-    // hideElement("weatherContent");
-    // hideElement("errorMsg");
-
-    const [currentWeather, forecast] = await Promise.all([
-      fetchCurrentWeather(city),
-      fetchForecast(city),
-    ]);
-
-    updateCurrentWeather(currentWeather);
-    updateChart(forecast);
-    updateForecast(forecast);
-
-    // hideElement("loading");
-    // hideElement("apiNotice");
-    // showElement("weatherContent");
-  } catch (error) {
-    // hideElement("loading");
-    // showError(error.message || "Failed to fetch weather data");
-    alert(error.message || "Failed to fetch weather data");
-    console.error("Error:", error);
+  if (found) {
+    await fetchWeatherByCoords(found.lat, found.lon, found.name);
+  } else {
+    const coords = await getCityCoordinates(city.trim());
+    if (coords) {
+      await fetchWeatherByCoords(coords.lat, coords.lon, coords.name);
+    } else {
+      alert(`Không tìm thấy: "${city}"\nVui lòng thử tên tiếng Anh.`);
+    }
   }
 }
 
-// Event listeners
-document.getElementById("searchBtn").addEventListener("click", () => {
-  const city = document.getElementById("searchInput").value.trim();
-  if (city) {
-    loadWeather(city);
+// ============================================
+// SEARCH
+// ============================================
+search.addEventListener("keypress", (e) => {
+  if (e.key === "Enter" && search.value.trim()) {
+    fetchWeather(search.value.trim());
+    search.value = "";
   }
 });
 
-document.getElementById("searchInput").addEventListener("keypress", (e) => {
-  if (e.key === "Enter") {
-    const city = e.target.value.trim();
-    if (city) {
-      loadWeather(city);
-    }
-  }
-});
-
-// Load default city on page load
-window.addEventListener("load", () => {
-  loadWeather("Madrid");
-});
+// ============================================
+// DEFAULT LOAD
+// ============================================
+fetchWeather("Ho Chi Minh City");
