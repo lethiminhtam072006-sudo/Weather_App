@@ -12,12 +12,32 @@ body {
   color: white;
   min-height: 100vh;
   padding: 24px;
+  overflow-x: hidden;
+  min-height: 100vh;
+  scroll-behavior: smooth;
 }
 
 .container {
   max-width: 1400px;
   margin: 0 auto;
+  position: relative;
+  z-index: 1;
+  transform: translateX(100%);
+  opacity: 0;
+  /* Chạy animation để kéo về vị trí 0 */
+  animation: slideInRight 0.8s forwards cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+  perspective: 1000px;
+  animation-delay: 0.5s;
 }
+@keyframes slideInRight {
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
 .video {
   position: fixed;
   top: 0;
@@ -26,6 +46,20 @@ body {
   height: 100%;
   object-fit: cover;
   z-index: -2;
+  pointer-events: none;
+  transform: translateZ(0);
+}
+
+.slide-out-content {
+  transform: translateX(-120%); /* Đẩy nội dung ra khỏi màn hình bên trái */
+  opacity: 0;
+  transition:
+    transform 0.8s cubic-bezier(0.4, 0, 0.2, 1),
+    opacity 0.5s ease;
+}
+
+.animate-in {
+  animation: slideInContent 0.8s forwards cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* Search Bar */
@@ -77,7 +111,7 @@ body {
   background: none;
   backdrop-filter: blur(0px);
   border: 0px;
-  height: 330px;
+  height: 300px;
 }
 
 /* Current Weather */
@@ -133,7 +167,7 @@ body {
 
 .weather-description {
   color: #d1d5db;
-  font-size: 40px;
+  font-size: 25px;
   margin-bottom: 8px;
 }
 
@@ -152,7 +186,7 @@ body {
 /* Today's Forecast Chart */
 .forecast-chart {
   margin-top: 1px;
-  height: 280px;
+  height: 300px;
 }
 
 .forecast-chart h2 {
@@ -177,7 +211,7 @@ body {
 /* Air Conditions */
 .air-conditions {
   margin-top: 10px;
-  height: 230px;
+  height: 300px;
 }
 
 .air-header {
@@ -201,7 +235,7 @@ body {
   border-radius: 8px;
   cursor: pointer;
   font-size: 14px;
-  transition: background 0.3s;
+  transition: 0.3s;
 }
 
 .see-more-btn:hover {
@@ -217,6 +251,9 @@ body {
 .detail-card {
   display: flex;
   flex-direction: column;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  padding: 10px;
 }
 
 .detail-label {
@@ -231,6 +268,28 @@ body {
 .detail-value {
   font-size: 32px;
   font-weight: 600;
+}
+
+@media (max-width: 768px) {
+  .air-conditions {
+    height: auto;
+    padding: 16px;
+  }
+
+  .weather-details {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+
+  .detail-label {
+    font-size: 11px;
+    gap: 4px;
+  }
+
+  .detail-value {
+    font-size: 20px; /* giảm size cho vừa */
+    font-weight: 600;
+  }
 }
 
 /* 7-Day Forecast */
@@ -302,7 +361,8 @@ body {
   .temperature,
   .temp-celsius,
   .temp-fahrenheit {
-    font-size: 64px;
+    font-size: 44px;
+    font-weight: 400;
   }
 
   .icon-floating {
@@ -310,10 +370,18 @@ body {
   }
 
   .city-name span#cityName {
-    font-size: 36px;
+    font-size: 40px;
+    text-align: center;
   }
-
-  .weather-details {
+  .weather-info {
     grid-template-columns: 1fr;
+    text-align: center;
+  }
+  .temp-desc {
+    text-align: center;
+  }
+  .weather-description {
+    font-size: 24px;
+    text-align: center;
   }
 }

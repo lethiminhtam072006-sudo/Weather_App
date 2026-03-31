@@ -12,6 +12,20 @@ body {
   align-items: center;
   padding: 20px;
 }
+
+.container {
+  animation: slideInRight 0.8s forwards cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Hiệu ứng trượt cho trang Intro khi nhấn chuyển */
+.container.slide-out-left {
+  transform: translateX(-120%);
+  opacity: 0;
+  transition:
+    transform 0.8s cubic-bezier(0.4, 0, 0.2, 1),
+    opacity 0.5s ease;
+}
+
 .nav-bar {
   position: fixed;
   top: 0;
@@ -173,18 +187,29 @@ body {
   width: 100%;
   max-width: 100%;
   position: relative;
-  z-index: 1; /* Đưa nội dung lên trên video */
+  z-index: 1;
 }
 .video {
-  position: fixed; /* Cố định vị trí */
+  position: fixed;
   top: 0;
   left: 0;
-
   width: 100%;
   height: 100%;
-  object-fit: cover; /* Video phủ kín màn hình */
-  z-index: -2; /* Đẩy video xuống phía sau cùng */
+  object-fit: cover;
+  z-index: -2;
 }
+.slide-out-content {
+  transform: translateX(-120%);
+  opacity: 0;
+  transition:
+    transform 0.8s cubic-bezier(0.4, 0, 0.2, 1),
+    opacity 0.5s ease;
+}
+
+.animate-in {
+  animation: slideInContent 0.8s forwards cubic-bezier(0.4, 0, 0.2, 1);
+}
+
 .loading {
   text-align: center;
   color: white;

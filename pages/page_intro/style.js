@@ -574,5 +574,24 @@ navCities.forEach((city) => {
   });
 });
 
-// Load thời tiết mặc định cho TP.HCM khi trang được tải
 fetchWeather("Ho Chi Minh City");
+
+document.addEventListener("DOMContentLoaded", () => {
+  const weatherInfo = document.querySelector(".weather-info");
+
+  if (weatherInfo) {
+    weatherInfo.addEventListener("click", () => {
+      const city = document.getElementById("cityName").textContent.trim();
+      const targetUrl = `../page_info/index-2.html?city=${encodeURIComponent(city)}`;
+
+      const mainContainer = document.querySelector(".container");
+      if (mainContainer) {
+        mainContainer.classList.add("slide-out-left");
+      }
+
+      setTimeout(() => {
+        window.location.href = targetUrl;
+      }, 600);
+    });
+  }
+});

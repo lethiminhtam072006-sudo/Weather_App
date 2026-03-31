@@ -130,8 +130,8 @@ async function fetchWeatherByCoords(lat, lon, displayName = null) {
     cityNameEl.textContent = displayName || data.name;
     weatherIconEl.textContent = weatherIcons[iconCode] || "🌤️";
     weatherDescEl.textContent = data.weather[0].description;
-    currentTempEl.textContent = Math.round(data.main.temp) + "°";
-    feelsLikeEl.textContent = Math.round(data.main.feels_like) + "°";
+    currentTempEl.textContent = Math.round(data.main.temp) + "°C";
+    feelsLikeEl.textContent = Math.round(data.main.feels_like) + "°C";
     windSpeedEl.textContent = (data.wind.speed * 3.6).toFixed(1) + " km/h";
     humidityEl.textContent = data.main.humidity + "%";
     pressureEl.textContent = data.main.pressure + " hPa";
@@ -158,7 +158,7 @@ async function fetchForecast(lat, lon) {
     const days = {};
     data.list.forEach((item) => {
       const date = new Date(item.dt * 1000);
-      const dayKey = date.toLocaleDateString("en-US", { weekday: "short" });
+      const dayKey = date.toLocaleDateString("vi-VN", { weekday: "short" });
       const fullKey = date.toDateString();
 
       if (!days[fullKey]) {
@@ -212,7 +212,7 @@ function renderChart(days) {
 
   if (chartInstance) chartInstance.destroy();
 
-  const labels = days.map((d, i) => (i === 0 ? "Today" : d.label));
+  const labels = days.map((d, i) => (i === 0 ? "Hôm nay" : d.label));
   const highs = days.map((d) => Math.round(d.high));
   const lows = days.map((d) => Math.round(d.low));
 
@@ -222,7 +222,7 @@ function renderChart(days) {
       labels,
       datasets: [
         {
-          label: "High °C",
+          label: "°C CAO",
           data: highs,
           borderColor: "#f97316",
           backgroundColor: "rgba(249,115,22,0.15)",
@@ -232,7 +232,7 @@ function renderChart(days) {
           pointRadius: 5,
         },
         {
-          label: "Low °C",
+          label: "°C THẤP",
           data: lows,
           borderColor: "#60a5fa",
           backgroundColor: "rgba(96,165,250,0.1)",
@@ -310,4 +310,6 @@ search.addEventListener("keypress", (e) => {
 // ============================================
 // DEFAULT LOAD
 // ============================================
-fetchWeather("Ho Chi Minh City");
+const params = new URLSearchParams(window.location.search);
+const cityFromURL = params.get("city");
+fetchWeather(cityFromURL || "Ho Chi Minh City");
